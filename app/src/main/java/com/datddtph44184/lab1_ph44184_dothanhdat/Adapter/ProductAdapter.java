@@ -35,10 +35,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ProductDTO productDTO = list.get(position);
-        holder.tvidproduct.setText(productDTO.getId()+ "");
-        holder.tvnameproduct.setText(productDTO.getName());
-        holder.tvpriceproduct.setText(productDTO.getPrice()+ "");
-        holder.tvid_catproduct.setText(productDTO.getId_cat()+"");
+        holder.tvidproduct.setText("ID: " + productDTO.getId()+ "");
+        holder.tvnameproduct.setText("Name: " +productDTO.getName());
+        holder.tvpriceproduct.setText("Price: "+productDTO.getPrice()+ "");
+        holder.tvid_catproduct.setText("Category: "+ productDTO.getId_cat()+"");
 
     }
 

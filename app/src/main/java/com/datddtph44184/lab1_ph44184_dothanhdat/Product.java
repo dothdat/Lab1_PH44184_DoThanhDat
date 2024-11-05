@@ -1,6 +1,7 @@
 package com.datddtph44184.lab1_ph44184_dothanhdat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -48,7 +49,13 @@ public class Product extends Fragment {
         list = productDAO.getList();
         productAdapter = new ProductAdapter(list, getContext());
         recyclerView.setAdapter(productAdapter);
-
+        actionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (getContext(), ThemSP.class) ;
+                startActivity(intent);
+            }
+        });
 
     }
 }
