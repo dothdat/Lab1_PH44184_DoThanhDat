@@ -15,13 +15,13 @@ import java.util.ArrayList;
 public class CatDAO {
     MyDbHelper dbHelper;
     SQLiteDatabase db;
-
+    CatDTO objCurrentCat = null;
     public CatDAO(Context context){
         dbHelper = new MyDbHelper(context);
         db = dbHelper.getWritableDatabase();
     }
     //ham them du lieu
-    public int AddRow (CatDTO objCat){
+    public int addRow (CatDTO objCat){
         ContentValues v = new ContentValues();
         v.put("name", objCat.getName());
         int kq = (int)db.insert("tb_cat",null,v);
@@ -55,12 +55,31 @@ public class CatDAO {
         }
         return  listCat;
     }
+
+    public CatDTO getOneById(int id){
+        String [] params = {String.valueOf(id)};
+        CatDTO objCat = null;
+        Cursor c = db.rawQuery("SELECT id, name FROM tb_cat WHERE id = ?" , params);
+        if(c != null && c.getCount()==1){
+            objCat = new CatDTO();//khởi tạo đối tượng
+            objCat.setId( c.getInt(0));
+            objCat.setName(c.getString(1));
+        }
+        return objCat;
+    }
+    public boolean updateRow(CatDTO objCat){
+        String [] dieu_kien = {String.valueOf(objCat.getId())};
+
+        ContentValues v = new ContentValues();
+        v.put("name", objCat.getName());
+        //thực hiện lệnh cập nhật
+        long kq = db.update("tb_cat ", v , "id = ?", dieu_kien);
+        return kq > 0 ;//nếu update thành công thì kq >0
+    }
     public boolean deleteRow (CatDTO objCat){
         // tạo đk update
         String [] dieu_kien = { String.valueOf(  objCat.getId()  ) };
         long kq = db.delete("tb_cat", "id = ?", dieu_kien );
         return kq>0;
     }
-
-
 }
