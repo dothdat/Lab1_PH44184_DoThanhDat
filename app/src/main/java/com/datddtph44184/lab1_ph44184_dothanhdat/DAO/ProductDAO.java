@@ -33,7 +33,7 @@ public class ProductDAO {
     //hàm lấy ds
     public ArrayList<ProductDTO> getList(){
         ArrayList<ProductDTO> listProduct = new ArrayList<>();
-        Cursor c = db.rawQuery("SELECT * FROM tb_product", null);
+        Cursor c = db.rawQuery("SELECT * FROM tb_product JOIN tb_cat ON tb_product.id_cat = tb_cat.id" , null);
         if(c != null && c.getCount()>0){
             //lay dc du lieu
             c.moveToFirst();
@@ -44,9 +44,13 @@ public class ProductDAO {
                 String name = c.getString(1);
                 Float price = c.getFloat(2);
                 int id_cat = c.getInt(3);
-                ProductDTO objProduct = new ProductDTO(id, name, price,id_cat);
-//                objProduct.setId(id);
-//                objProduct.setName(name);
+                String name_cat = c.getString(5);
+                ProductDTO objProduct = new ProductDTO();
+                objProduct.setId(id);
+                objProduct.setName(name);
+                objProduct.setPrice(price);
+                objProduct.setId_cat(id_cat);
+                objProduct.setTenTheLoai(name_cat);
                 //cho vao list
                 listProduct.add(objProduct);
             }while (c.moveToNext());
@@ -73,19 +77,20 @@ public class ProductDAO {
         }
         return objProduct;
     }
-//    public boolean updateRow(CatDTO objCat){
-//        String [] dieu_kien = {String.valueOf(objCat.getId())};
-//
-//        ContentValues v = new ContentValues();
-//        v.put("name", objCat.getName());
-//        //thực hiện lệnh cập nhật
-//        long kq = db.update("tb_cat ", v , "id = ?", dieu_kien);
-//        return kq > 0 ;//nếu update thành công thì kq >0
-//    }
-//    public boolean deleteRow (CatDTO objCat){
-//        // tạo đk update
-//        String [] dieu_kien = { String.valueOf(  objCat.getId()  ) };
-//        long kq = db.delete("tb_cat", "id = ?", dieu_kien );
-//        return kq>0;
-//    }
+
+    public boolean updateRow(ProductDTO objProductDTO){
+        String [] dieu_kien = {String.valueOf(objProductDTO.getId())};
+
+        ContentValues v = new ContentValues();
+        v.put("name", objProductDTO.getName());
+        v.put("price", objProductDTO.getPrice());
+        v.put("id_cat", objProductDTO.getId_cat());
+        //thực hiện lệnh cập nhật
+        long kq = db.update("tb_product ", v , "id = ?", dieu_kien);
+        return kq > 0 ;//nếu update thành công thì kq >0
+    }
+public boolean deleteProduct(int productId) {
+    int result = db.delete("tb_product", "id = ?", new String[]{String.valueOf(productId)});
+    return result > 0; // Trả về true nếu xóa thành công
+}
 }

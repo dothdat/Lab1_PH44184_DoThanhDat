@@ -39,6 +39,7 @@ public class Product extends Fragment {
         View v = inflater.inflate(R.layout.fragment_product, container, false);
         // Inflate the layout for this fragment
         AnhXa(v);
+//        loadData();
         return v;
     }
     private void AnhXa(View  v){
@@ -49,6 +50,7 @@ public class Product extends Fragment {
         list = productDAO.getList();
         productAdapter = new ProductAdapter(list, getContext());
         recyclerView.setAdapter(productAdapter);
+
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,6 +58,18 @@ public class Product extends Fragment {
                 startActivity(intent);
             }
         });
+
+    }
+    private void loadData(){
+        list.clear();
+        list.addAll(productDAO.getList());
+        productAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
 
     }
 }

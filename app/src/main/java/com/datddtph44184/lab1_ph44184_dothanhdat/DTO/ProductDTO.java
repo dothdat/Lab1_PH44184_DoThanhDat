@@ -5,6 +5,7 @@ public class ProductDTO {
     String name;
     float price;
     int id_cat;
+    String tenTheLoai;
 
     public ProductDTO() {
     }
@@ -49,5 +50,13 @@ public class ProductDTO {
 
     public void setId_cat(int id_cat) {
         this.id_cat = id_cat;
+    }
+
+    public String getTenTheLoai() {
+        return tenTheLoai;
+    }
+
+    public void setTenTheLoai(String tenTheLoai) {
+        this.tenTheLoai = tenTheLoai;
     }
 }

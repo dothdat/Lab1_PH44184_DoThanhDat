@@ -50,7 +50,6 @@ public class TheLoai extends Fragment {
         edCatName = v.findViewById(R.id.ed_catname);
         catDAO = new CatDAO(getContext());
         CatDTO objCat = new CatDTO();
-        objCat.setName("dream");
 // ghi vao CSDL
         int kq = catDAO.addRow( objCat );
         if(kq == -1){
