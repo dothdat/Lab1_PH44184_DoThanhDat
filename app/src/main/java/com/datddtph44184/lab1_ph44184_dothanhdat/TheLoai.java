@@ -26,7 +26,7 @@ public class TheLoai extends Fragment {
     CatDAO catDAO;
     String TAG = "zzzzzzzz";
     ListView lvCat;
-    Button btnAdd, btnUpdate, btnDelete;
+    Button btnAdd, btnUpdate, btnDelete, btnDialog;
     EditText edCatName;
     ArrayList<CatDTO> listCat;
     CatAdapter adapter;
